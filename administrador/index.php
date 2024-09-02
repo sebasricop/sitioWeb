@@ -1,7 +1,28 @@
-<?php 
+<?php
+session_start();
+if ($_POST) {
 
-if($_POST){
-    header('Location:inicio.php');
+    /*
+    Si quiero usar con base de datos en el if va con esta instrucción
+    
+    $sentenciaSQL = $conexion->prepare("SELECT * FROM libros WHERE id=:id");
+        $sentenciaSQL->bindParam(':id', $txtID);
+        $sentenciaSQL->execute();
+        $libro = $sentenciaSQL->fetch(PDO::FETCH_LAZY);
+
+        $txtNombre = $libro['nombre'];
+        $txtImagen = $libro['imagen'];
+        break;*/
+
+    if (($_POST['usuario'] == "develoteca") && ($_POST['contrasenia'] == "sistema")) {
+
+        $_SESSION['usuario']="ok";
+        $_SESSION['nombreUsuario']="Develoteca";
+
+        header('Location:inicio.php');
+    }else{
+        $mensaje = "Error: El usuario o contraseña son incorrrectos";
+    }
 }
 
 ?>
@@ -21,7 +42,7 @@ if($_POST){
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                
+
             </div>
             <div class="col-md-4">
                 <br><br><br>
@@ -32,23 +53,29 @@ if($_POST){
                     </div>
                     <div class="card-body">
 
-                    <form method="POST">
+                    <?php if(isset($mensaje)) {?>
+                        <div class="alert alert-danger" role="alert">
+                            <?php echo $mensaje; ?>
+                        </div>
+                        <?php }?>
 
-                    <div class = "form-group">
-                    <label>Usuario</label>
-                    <input type="text" class="form-control" name="usuario" placeholder="Escribe tu usuario">
-                    </div>
+                        <form method="POST">
 
-                    <div class="form-group">
-                    <label>Contraseña:</label>
-                    <input type="password" class="form-control" name="contrasenia" placeholder="Escribe tu contraseña">
-                    </div>                   
+                            <div class="form-group">
+                                <label>Usuario</label>
+                                <input type="text" class="form-control" name="usuario" placeholder="Escribe tu usuario">
+                            </div>
 
-                    <button type="submit" class="btn btn-primary">Entrar al administrador</button>
-                    </form>
-                    
-                    
-                    
+                            <div class="form-group">
+                                <label>Contraseña:</label>
+                                <input type="password" class="form-control" name="contrasenia" placeholder="Escribe tu contraseña">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Entrar al administrador</button>
+                        </form>
+
+
+
                     </div>
                 </div>
             </div>
